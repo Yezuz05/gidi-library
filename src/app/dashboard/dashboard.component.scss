@@ -28,6 +28,10 @@
             min-width: 200px;
             box-shadow: 6px 0 6px rgba(0,0,0,.1);
             background: #fafafa;
+            a.active {
+                color: #56953C;
+                font-weight: 500;
+            }
         }
         mat-sidenav-content {
             padding: 20px 20px 0;
