@@ -1,3 +1,25 @@
-<p>
-  add-reader works!
-</p>
+<mat-card class="add-reader-card">
+    <mat-card-header>
+      <mat-card-title>Add Reader</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="readerForm">
+        <p>
+          <mat-form-field>
+            <input formControlName="name" matInput placeholder="Name">
+          </mat-form-field>
+          <mat-form-field>
+            <input type="email" formControlName="email" matInput placeholder="Email">
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <textarea formControlName="address" matInput placeholder="Contact Address" rows="10"></textarea>
+          </mat-form-field>
+        </p>
+        <p>
+          <button mat-raised-button>Add Reader</button>
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
