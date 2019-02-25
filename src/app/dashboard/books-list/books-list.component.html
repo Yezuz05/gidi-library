@@ -18,23 +18,23 @@
   </mat-card-header>
   <mat-card-content>
     <div class="books">
-      <mat-card class="book">
+      <mat-card class="book" *ngFor="let book of books | async">
         <mat-card-header>
-          <mat-card-title>Book Name</mat-card-title>
-          <mat-card-subtitle>Book author</mat-card-subtitle>
+          <mat-card-title>{{ book.name }}</mat-card-title>
+          <mat-card-subtitle>{{ book.author }}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <img mat-card-image [src]="book.image_url">
         <mat-card-content>
           <p>
-            300 Pages
+            {{ book.pages }} Pages
           </p>
           <p>
-            ISBN: KJDHFDF874K4B44B328932983JH
+            ISBN: {{ book.isbn }}
           </p>
         </mat-card-content>
         <mat-card-actions>
           <button mat-button color="primary">LEND</button>
-          <button mat-button color="accent" [routerLink]="['edit-book', '1234'] ">EDIT</button>
+          <button mat-button color="accent" [routerLink]="['edit-book', book.id] ">EDIT</button>
           <button mat-button color="warn">DELETE</button>
         </mat-card-actions>
       </mat-card>
