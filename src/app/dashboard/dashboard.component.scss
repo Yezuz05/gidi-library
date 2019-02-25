@@ -6,6 +6,9 @@
     bottom: 0;
     left: 0;
     right: 0;
+    .dashboard-toolbar {
+        z-index: 2;
+    }
     &.dashboard-is-mobile {
         .dashboard-toolbar {
             position: fixed;
@@ -17,11 +20,14 @@
     }
     .dashboard-toolbar {
         background: linear-gradient(135deg, #69B447 0%,#56953C 100%);
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
     }
     .dashboard-sidenav-container {
         flex: 1;
         mat-sidenav {
             min-width: 200px;
+            box-shadow: 6px 0 6px rgba(0,0,0,.1);
+            background: #fafafa;
         }
         mat-sidenav-content {
             padding: 0 20px;

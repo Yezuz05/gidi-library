@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { MatSidenav } from '@angular/material';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,6 +9,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 })
 export class DashboardComponent implements OnInit {
 
+  @ViewChild('snav') sideBar: MatSidenav
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
@@ -16,9 +18,10 @@ export class DashboardComponent implements OnInit {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
-
-
+  
+  
   ngOnInit() {
+    this.mobileQuery.matches ? null : this.sideBar.open();
   }
 
   ngOnDestroy(): void {
