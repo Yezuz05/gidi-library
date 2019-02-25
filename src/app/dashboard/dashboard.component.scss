@@ -1,0 +1,34 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    &.dashboard-is-mobile {
+        .dashboard-toolbar {
+            position: fixed;
+            z-index: 2;
+        }
+       .dashboard-sidenav-container {
+            flex: 1 0 auto;
+        }
+    }
+    .dashboard-toolbar {
+        background: linear-gradient(135deg, #69B447 0%,#56953C 100%);
+    }
+    .dashboard-sidenav-container {
+        flex: 1;
+        mat-sidenav {
+            min-width: 200px;
+        }
+        mat-sidenav-content {
+            padding: 0 20px;
+        }
+    }
+}
+
+h1.dashboard-app-name {
+    margin-left: 8px;
+}
