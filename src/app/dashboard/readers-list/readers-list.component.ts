@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-readers-list',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReadersListComponent implements OnInit {
 
-  constructor() { }
+  searchControl= this.fb.control(null);
+
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
   }

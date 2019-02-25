@@ -1,0 +1,19 @@
+.readers-card {
+    min-height: 100%;
+    mat-card-header {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        align-items: center;
+        & > * {
+            margin-right: 30px;
+        }
+        mat-form-field:first-of-type {
+            flex-grow: .8;
+        }
+    }
+    .readers {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 300px);
+    }
+}
