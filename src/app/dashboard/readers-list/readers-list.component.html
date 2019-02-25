@@ -1,0 +1,31 @@
+<mat-card class="readers-card">
+  <mat-card-header>
+    <mat-form-field>
+      <mat-label></mat-label>
+      <input type="search" matInput [formControl]="searchControl" placeholder="Search by book name...">
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [formControl]="filterControl">
+        <mat-option value="all">All</mat-option>
+        <mat-option value="borrowed">Borrowed</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button routerLink="add-book">
+      <mat-icon>add</mat-icon>
+      Add Book
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <img matListAvatar src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="...">
+        <h3 matLine> Name Name </h3>
+        <p matLine>
+          <span> Wateva </span>
+          <span class="demo-2"> Wateva </span>
+        </p>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
