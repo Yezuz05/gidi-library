@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyCZyfUNC9xajrBs7pVKTeHsJzqBCB__pFQ",
+    authDomain: "gidi-library.firebaseapp.com",
+    databaseURL: "https://gidi-library.firebaseio.com",
+    projectId: "gidi-library",
+    storageBucket: "gidi-library.appspot.com",
+    messagingSenderId: "71525992901"
+  }
 };
 
 /*
