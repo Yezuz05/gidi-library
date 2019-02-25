@@ -11,6 +11,7 @@ const dashboardRoutes: Routes = [
         {path: '', redirectTo: 'books', pathMatch: 'full'},
         {path: 'books', component: BooksListComponent},
         {path: 'books/add-book', component: AddBookComponent},
+        {path: 'books/edit-book/:id', component: AddBookComponent},
     ]
    },
 ];
