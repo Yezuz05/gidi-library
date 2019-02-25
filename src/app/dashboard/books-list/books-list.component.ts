@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-books-list',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BooksListComponent implements OnInit {
 
-  constructor() { }
+  searchControl = this.fb.control(null);
+  filterControl = this.fb.control('all');
+
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
   }
