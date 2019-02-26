@@ -9,14 +9,16 @@ import { BooksListComponent } from './books-list/books-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReadersListComponent } from './readers-list/readers-list.component';
 import { AddReaderComponent } from './add-reader/add-reader.component';
+import { DeleteComponent } from './delete.component';
 
 @NgModule({
-  declarations: [DashboardComponent, AddBookComponent, BooksListComponent, ReadersListComponent, AddReaderComponent],
+  declarations: [DashboardComponent, AddBookComponent, BooksListComponent, ReadersListComponent, AddReaderComponent, DeleteComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     ReactiveFormsModule,
     MaterialModule
-  ]
+  ],
+  entryComponents: [DeleteComponent]
 })
 export class DashboardModule { }

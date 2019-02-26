@@ -4,6 +4,8 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Book } from '../interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { DeleteComponent } from '../delete.component';
 
 @Component({
   selector: 'app-books-list',
@@ -18,7 +20,8 @@ export class BooksListComponent implements OnInit {
   books: Observable<Book[]>;
 
   constructor(private fb: FormBuilder,
-              private afs: AngularFirestore) {
+              private afs: AngularFirestore,
+              public dialog: MatDialog) {
                 this.booksCollection = afs.collection<Book>('books');
                 this.books = this.booksCollection
                               .snapshotChanges().pipe(
@@ -31,6 +34,12 @@ export class BooksListComponent implements OnInit {
               }
 
   ngOnInit() {
+  }
+
+  deleteBook(id) {
+    this.dialog.open(DeleteComponent, {
+      data: {id, type: 0}
+    });
   }
 
 }

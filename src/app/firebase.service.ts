@@ -27,4 +27,8 @@ export class FirebaseService {
   updateBook(book, id) {
     return this.afs.doc(`books/${id}`).update(book)
   }
+
+  delete(path) {
+    return this.afs.doc(path).delete();
+  }
 }

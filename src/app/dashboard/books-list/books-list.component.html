@@ -35,7 +35,7 @@
         <mat-card-actions>
           <button mat-button color="primary">LEND</button>
           <button mat-button color="accent" [routerLink]="['edit-book', book.id] ">EDIT</button>
-          <button mat-button color="warn">DELETE</button>
+          <button mat-button color="warn" (click)="deleteBook(book.id)">DELETE</button>
         </mat-card-actions>
       </mat-card>
     </div>

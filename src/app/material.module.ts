@@ -12,7 +12,8 @@ import { MatCardModule,
          MatDividerModule,
          MatSelectModule,
          MatSnackBarModule,
-         MatProgressBarModule} from '@angular/material';
+         MatProgressBarModule,
+         MatDialogModule} from '@angular/material';
 
 @NgModule({
   declarations: [],
@@ -31,7 +32,8 @@ import { MatCardModule,
     MatDividerModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule
   ]
 })
 export class MaterialModule { }
