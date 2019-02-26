@@ -1,6 +1,6 @@
 <mat-card class="add-book-card">
   <mat-card-header>
-    <mat-card-title>Add Book</mat-card-title>
+    <mat-card-title>{{ bookId ? 'Edit' : 'Add'}} Book</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="bookForm" (ngSubmit)="submit()">
@@ -32,7 +32,7 @@
         </mat-form-field>
       </p>
       <p>
-        <button [disabled]="bookForm.invalid" mat-raised-button>Add Book</button>
+        <button [disabled]="bookForm.invalid" mat-raised-button>{{ bookId ? 'Update': 'Add'}} Book</button>
       </p>
     </form>
   </mat-card-content>

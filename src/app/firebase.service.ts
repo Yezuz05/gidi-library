@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Book } from './dashboard/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,16 @@ export class FirebaseService {
     return this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
   }
 
-  getBooks() {
-    this.afs
-  }
-
+  
   addBook(book) {
     return this.afs.collection('books').add(book);
+  }
+
+  getBook(id) {
+    return this.afs.doc(`books/${id}`).snapshotChanges()
+  }
+
+  updateBook(book, id) {
+    return this.afs.doc(`books/${id}`).update(book)
   }
 }

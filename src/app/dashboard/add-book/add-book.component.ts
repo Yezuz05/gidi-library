@@ -22,22 +22,28 @@ export class AddBookComponent implements OnInit {
     description: [null, Validators.required],
     image_url: [null, Validators.required]
   });
-  fileTypes = [ 'image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
+  fileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
   isUploadingFile = false;
   uploadProgress: Observable<number>;
+  bookId: string
 
   constructor(private fb: FormBuilder,
-              private storage: AngularFireStorage,
-              private snackBar: MatSnackBar,
-              private router: Router,
-              private route: ActivatedRoute,
-              private fireService: FirebaseService) { }
+    private storage: AngularFireStorage,
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private route: ActivatedRoute,
+    private fireService: FirebaseService) { }
 
   ngOnInit() {
+    this.route.paramMap
+      .subscribe(params => {
+        this.bookId = params.get('id');
+        this.getBook();
+      })
   }
 
   upload(event) {
-    const image_file:File = event.target.files[0];
+    const image_file: File = event.target.files[0];
     if (this.fileTypes.includes(image_file.type)) {
       this.isUploadingFile = true;
       const filePath = `${image_file.name}-${new Date().toISOString()}`;
@@ -46,13 +52,13 @@ export class AddBookComponent implements OnInit {
       task.snapshotChanges().pipe(
         finalize(() => {
           fileRef.getDownloadURL()
-            .subscribe(url =>{
-              this.bookForm.patchValue({image_url: url})
+            .subscribe(url => {
+              this.bookForm.patchValue({ image_url: url })
               this.isUploadingFile = false;
             })
         })
       )
-      .subscribe()
+        .subscribe()
     } else {
       this.snackBar.open('Upload image of type PNG, JPEG or GIF', '', {
         duration: 2500,
@@ -63,9 +69,13 @@ export class AddBookComponent implements OnInit {
 
   submit() {
     const form = this.bookForm.value;
+    this.bookId ? this.updateBook(form) : this.addBook(form);
+  }
+
+  addBook(form) {
     this.fireService.addBook(form)
       .then(res => {
-        this.router.navigate(['../'], {relativeTo: this.route})
+        this.router.navigate(['../'], { relativeTo: this.route })
       })
       .catch(err => {
         this.snackBar.open(err.message, '', {
@@ -73,6 +83,28 @@ export class AddBookComponent implements OnInit {
           verticalPosition: 'top'
         });
       })
+    }
+    
+    updateBook(form) {
+      this.fireService.updateBook(form, this.bookId)
+      .then((res) =>{
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      })
+      .catch(err => {
+        this.snackBar.open(err.message, '', {
+          duration: 2500,
+          verticalPosition: 'top'
+        });
+      })
+  }
+
+  getBook() {
+    if (this.bookId) {
+      this.fireService.getBook(this.bookId)
+        .subscribe(res => {
+          this.bookForm.patchValue(res.payload.data());
+        })
+    }
   }
 
 }
