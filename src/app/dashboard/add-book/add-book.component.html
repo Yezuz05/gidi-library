@@ -3,7 +3,13 @@
     <mat-card-title>Add Book</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form [formGroup]="bookForm">
+    <form [formGroup]="bookForm" (ngSubmit)="submit()">
+      <label class="book-img" for="image">
+        <img *ngIf="bookForm.value.image_url" [src]="bookForm.value.image_url">
+        <mat-icon *ngIf="!bookForm.value.image_url">add_a_photo</mat-icon>
+        <input id="image" type="file" hidden (change)="upload($event)">
+        <mat-progress-bar *ngIf="isUploadingFile" mode="indeterminate"></mat-progress-bar>
+      </label>
       <p>
         <mat-form-field>
           <input formControlName="name" matInput placeholder="Name">
@@ -26,7 +32,7 @@
         </mat-form-field>
       </p>
       <p>
-        <button mat-raised-button>Add Book</button>
+        <button [disabled]="bookForm.invalid" mat-raised-button>Add Book</button>
       </p>
     </form>
   </mat-card-content>
