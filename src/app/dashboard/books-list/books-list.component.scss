@@ -15,6 +15,7 @@
     .books {
         display: grid;
         grid-template-columns: repeat(auto-fit, 300px);
+        grid-gap: 30px;
         margin: 0 auto;
         padding: 15px 15px 0;
         .book {
