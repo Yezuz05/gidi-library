@@ -28,7 +28,7 @@ import { environment } from '../environments/environment';
     DashboardModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     AngularFireStorageModule
   ],
