@@ -31,8 +31,6 @@ export class DeleteComponent implements OnInit {
   delete() {
     this.fireService.delete(`${this.types[this.data.type]}s/${this.data.id}`)
     .then((res) => {
-      console.log(res);
-      this.dialogRef.close();
     })
     .catch(err => {
       this.snackBar.open(err.message, '', {
@@ -40,6 +38,7 @@ export class DeleteComponent implements OnInit {
         verticalPosition: 'top'
       });
     })
+    this.dialogRef.close();
   }
 
 }

@@ -27,7 +27,7 @@
           <mat-card-actions>
             <button mat-button color="primary">VIEW</button>
             <button mat-button color="accent" [routerLink]="['edit-reader', reader.id] ">EDIT</button>
-            <button mat-button color="warn">DELETE</button>
+            <button mat-button (click)="deleteReader(reader.id)" color="warn">DELETE</button>
           </mat-card-actions>
         </mat-card>
     </div>

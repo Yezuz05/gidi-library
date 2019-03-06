@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { FirebaseService } from 'src/app/firebase.service';
 import { map, debounceTime } from 'rxjs/operators';
+import { DeleteComponent } from '../delete.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-readers-list',
@@ -15,7 +17,8 @@ export class ReadersListComponent implements OnInit {
   readers = [];
 
   constructor(private fb: FormBuilder,
-              private fireService: FirebaseService) { }
+              private fireService: FirebaseService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getReaders();
@@ -39,6 +42,12 @@ export class ReadersListComponent implements OnInit {
 
   searchReaders(searchTerm) {
     this.readers = this.readersSource.filter(reader => new RegExp(searchTerm.trim(), 'i').test(reader.name));
+  }
+
+  deleteReader(id) {
+    this.dialog.open(DeleteComponent, {
+      data: {id, type: 1}
+    });
   }
 
 }
