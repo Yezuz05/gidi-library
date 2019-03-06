@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Book } from './dashboard/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,10 @@ export class FirebaseService {
     return this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
   }
 
-  
+  getBooks() {
+    return this.afs.collection('books').snapshotChanges();
+  }
+
   addBook(book) {
     return this.afs.collection('books').add(book);
   }
@@ -30,5 +32,9 @@ export class FirebaseService {
 
   delete(path) {
     return this.afs.doc(path).delete();
+  }
+
+  filter(value) {
+    return this.afs.collection('books', ref => ref.where('is_borrowed', '==', value)).snapshotChanges();
   }
 }

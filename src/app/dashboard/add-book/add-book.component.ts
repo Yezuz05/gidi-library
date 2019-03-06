@@ -73,7 +73,7 @@ export class AddBookComponent implements OnInit {
   }
 
   addBook(form) {
-    this.fireService.addBook({...form, is_borrowed: true, logs: []})
+    this.fireService.addBook({...form, is_borrowed: false, logs: []})
       .then(res => {
         this.router.navigate(['../'], { relativeTo: this.route })
       })
