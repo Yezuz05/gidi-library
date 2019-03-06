@@ -17,7 +17,7 @@
             <mat-list>
               <mat-list-item>
                 <img matListAvatar [src]="reader.image_url" alt="...">
-                <h3 matLine> {{ reader.name }} </h3>
+                <h3 matLine> {{ reader.name | titlecase }} </h3>
                 <p matLine>
                   {{ reader.email }}
                 </p>

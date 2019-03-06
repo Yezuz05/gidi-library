@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { FirebaseService } from 'src/app/firebase.service';
-import { map } from 'rxjs/operators';
+import { map, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-readers-list',
@@ -19,6 +19,9 @@ export class ReadersListComponent implements OnInit {
 
   ngOnInit() {
     this.getReaders();
+    this.searchControl.valueChanges.pipe(debounceTime(600)).subscribe((searchTerm) => {
+      this.searchReaders(searchTerm);
+    })
   }
 
   getReaders() {
@@ -32,6 +35,10 @@ export class ReadersListComponent implements OnInit {
         this.readersSource = result;
         this.readers = this.readersSource;
       })
+  }
+
+  searchReaders(searchTerm) {
+    this.readers = this.readersSource.filter(reader => new RegExp(searchTerm.trim(), 'i').test(reader.name));
   }
 
 }
