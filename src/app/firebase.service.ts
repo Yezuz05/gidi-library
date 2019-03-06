@@ -34,7 +34,11 @@ export class FirebaseService {
     return this.afs.doc(path).delete();
   }
 
-  filter(value) {
+  filterBooks(value) {
     return this.afs.collection('books', ref => ref.where('is_borrowed', '==', value)).snapshotChanges();
+  }
+
+  getReaders() {
+    return this.afs.collection('readers').snapshotChanges();
   }
 }

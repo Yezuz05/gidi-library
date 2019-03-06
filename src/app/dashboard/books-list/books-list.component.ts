@@ -68,7 +68,7 @@ export class BooksListComponent implements OnInit {
   }
 
   getBooksBy(borrow_state) {
-    this.fireService.filter(borrow_state)
+    this.fireService.filterBooks(borrow_state)
     .pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Book;
