@@ -4,7 +4,7 @@
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="bookForm" (ngSubmit)="submit()">
-      <label class="book-img" for="image">
+      <label class="img" for="image">
         <img *ngIf="bookForm.value.image_url" [src]="bookForm.value.image_url">
         <mat-icon *ngIf="!bookForm.value.image_url">add_a_photo</mat-icon>
         <input id="image" type="file" hidden (change)="upload($event)">

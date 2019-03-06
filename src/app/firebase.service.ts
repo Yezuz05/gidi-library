@@ -41,4 +41,16 @@ export class FirebaseService {
   getReaders() {
     return this.afs.collection('readers').snapshotChanges();
   }
+
+  addReader(reader) {
+    return this.afs.collection('readers').add(reader);
+  }
+
+  getReader(id) {
+    return this.afs.doc(`readers/${id}`).snapshotChanges()
+  }
+
+  updateReader(reader, id) {
+    return this.afs.doc(`readers/${id}`).update(reader)
+  }
 }

@@ -24,8 +24,7 @@ export class AddBookComponent implements OnInit {
   });
   fileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
   isUploadingFile = false;
-  uploadProgress: Observable<number>;
-  bookId: string
+  bookId: string;
 
   constructor(private fb: FormBuilder,
     private storage: AngularFireStorage,
@@ -83,19 +82,19 @@ export class AddBookComponent implements OnInit {
           verticalPosition: 'top'
         });
       })
-    }
+  }
     
-    updateBook(form) {
-      this.fireService.updateBook(form, this.bookId)
-      .then((res) =>{
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      })
-      .catch(err => {
-        this.snackBar.open(err.message, '', {
-          duration: 2500,
-          verticalPosition: 'top'
-        });
-      })
+  updateBook(form) {
+    this.fireService.updateBook(form, this.bookId)
+    .then((res) =>{
+      this.router.navigate(['../../'], { relativeTo: this.route });
+    })
+    .catch(err => {
+      this.snackBar.open(err.message, '', {
+        duration: 2500,
+        verticalPosition: 'top'
+      });
+    })
   }
 
   getBook() {

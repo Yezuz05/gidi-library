@@ -1,9 +1,15 @@
 <mat-card class="add-reader-card">
     <mat-card-header>
-      <mat-card-title>Add Reader</mat-card-title>
+      <mat-card-title>{{ readerId ? 'Edit' : 'Add'}} Reader</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form [formGroup]="readerForm">
+      <form [formGroup]="readerForm" (ngSubmit)="submit()">
+        <label class="img" for="image">
+          <img *ngIf="readerForm.value.image_url" [src]="readerForm.value.image_url">
+          <mat-icon *ngIf="!readerForm.value.image_url">add_a_photo</mat-icon>
+          <input id="image" type="file" hidden (change)="upload($event)">
+          <mat-progress-bar *ngIf="isUploadingFile" mode="indeterminate"></mat-progress-bar>
+        </label>
         <p>
           <mat-form-field>
             <input formControlName="name" matInput placeholder="Name">
@@ -18,7 +24,7 @@
           </mat-form-field>
         </p>
         <p>
-          <button mat-raised-button>Add Reader</button>
+          <button [disabled]="readerForm.invalid" mat-raised-button>{{ readerId ? 'Update' : 'Add'}} Reader</button>
         </p>
       </form>
     </mat-card-content>
