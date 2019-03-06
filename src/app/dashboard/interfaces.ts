@@ -11,14 +11,17 @@ export interface Book {
 }
 
 export interface Reader {
+    id: string;
     name: string;
     email: string
     address: string;
     image_url: string;
+    books_borrowed: BorrowLog[];
 }
 
 export interface BorrowLog {
     reader_id: string;
+    book_id: string;
     borrow_date: string;
     return_date: string;
 }
