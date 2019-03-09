@@ -7,6 +7,7 @@ import { map, debounceTime } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { DeleteComponent } from '../delete.component';
 import { FirebaseService } from 'src/app/firebase.service';
+import { LendBookComponent } from '../lend-book.component';
 
 @Component({
   selector: 'app-books-list',
@@ -17,7 +18,7 @@ export class BooksListComponent implements OnInit {
 
   searchControl = this.fb.control(null);
   filterControl = this.fb.control('all');
-  books;
+  books: Book[];
   booksSource = [];
 
   constructor(private fb: FormBuilder,
@@ -49,6 +50,18 @@ export class BooksListComponent implements OnInit {
     this.dialog.open(DeleteComponent, {
       data: {id, type: 0}
     });
+  }
+
+  lend(book) {
+    const lendDialogRef = this.dialog.open(LendBookComponent, {
+      data: { book },
+      minWidth: 300
+    });
+    lendDialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.selectChange(this.filterControl.value);
+      }
+    })
   }
 
   selectChange(event) {

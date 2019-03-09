@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Reader, Book } from './dashboard/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -52,5 +53,12 @@ export class FirebaseService {
 
   updateReader(reader, id) {
     return this.afs.doc(`readers/${id}`).update(reader)
+  }
+
+  lendBook(book: Book, reader: Reader) {
+    return Promise.all([
+      this.afs.doc(`readers/${reader.id}`).update(reader),
+      this.afs.doc(`books/${book.id}`).update(book),
+    ])
   }
 }
