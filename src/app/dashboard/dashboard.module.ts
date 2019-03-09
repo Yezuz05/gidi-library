@@ -11,9 +11,10 @@ import { ReadersListComponent } from './readers-list/readers-list.component';
 import { AddReaderComponent } from './add-reader/add-reader.component';
 import { DeleteComponent } from './delete.component';
 import { LendBookComponent } from './lend-book.component';
+import { ViewReaderComponent } from './view-reader/view-reader.component';
 
 @NgModule({
-  declarations: [DashboardComponent, AddBookComponent, BooksListComponent, ReadersListComponent, AddReaderComponent, DeleteComponent, LendBookComponent],
+  declarations: [DashboardComponent, AddBookComponent, BooksListComponent, ReadersListComponent, AddReaderComponent, DeleteComponent, LendBookComponent, ViewReaderComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
