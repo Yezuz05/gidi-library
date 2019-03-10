@@ -2,21 +2,32 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Reader, Book } from './dashboard/interfaces';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
+  isLoggedIn = false;
+
   constructor(private afAuth: AngularFireAuth,
-              private afs: AngularFirestore) { }
+              private router: Router,
+              private afs: AngularFirestore) {
+                this.afAuth.authState.subscribe(state => {
+                  state ? this.isLoggedIn = true : this.isLoggedIn = false;
+                })
+              }
 
   login(user) {
     return this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
   }
 
   logout() {
-    return this.afAuth.auth.signOut();
+    return this.afAuth.auth.signOut()
+    .then(()=>{
+      this.router.navigate(['/login']);
+    })
   }
 
   getBooks() {

@@ -17,7 +17,6 @@ export class DashboardComponent implements OnInit {
 
   constructor(changeDetectorRef: ChangeDetectorRef,
               media: MediaMatcher,
-              private router: Router,
               private fireService: FirebaseService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -34,10 +33,7 @@ export class DashboardComponent implements OnInit {
   }
 
   logout() {
-    this.fireService.logout()
-      .then(()=>{
-        this.router.navigate(['/login']);
-      })
+    this.fireService.logout();
   }
 
 }
