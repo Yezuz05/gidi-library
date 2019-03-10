@@ -2,6 +2,8 @@
     <mat-toolbar color="primary" class="dashboard-toolbar">
       <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
       <h1 class="dashboard-app-name">GidiLibrary</h1>
+      <span class="mat-row-space"></span>
+      <button (click)="logout()" mat-button>LOGOUT</button>
     </mat-toolbar>
   
     <mat-sidenav-container class="dashboard-sidenav-container"
