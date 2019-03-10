@@ -62,7 +62,7 @@ export class LendBookComponent implements OnInit {
     book.is_borrowed = true;
     book.logs.push({book_id: book.id, borrow_date: new Date().toDateString(), reader_id: reader.id, return_date: null});
     reader.books_borrowed.push({book_id: book.id, borrow_date: new Date().toDateString(), reader_id: reader.id, return_date: null});
-    this.fireService.lendBook(book, reader)
+    this.fireService.updateBookLog(book, reader)
       .then(result =>{
         this.dialogRef.close(true);
         console.log(result);

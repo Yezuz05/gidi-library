@@ -1,3 +1,39 @@
-<p>
-  view-reader works!
-</p>
+<mat-card class="reader-card">
+  <mat-spinner *ngIf="!reader else readerTemplate"></mat-spinner>
+  <ng-template #readerTemplate>
+    <mat-card-header>
+      <mat-card-title>Reader Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <img mat-card-lg-image [src]="reader.image_url">
+      <mat-list>
+        <mat-list-item>Name: &nbsp; <b> {{ reader.name | titlecase }}</b> </mat-list-item>
+        <mat-list-item>Email: &nbsp; <b> {{ reader.email }}</b> </mat-list-item>
+        <mat-list-item>Address: &nbsp; <address>{{ reader.address }}</address>
+        </mat-list-item>
+        <mat-list-item><b>Books Borrowed</b></mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+      <div class="borrowed-books">
+        <mat-card *ngFor="let book of books">
+          <mat-card-header>
+            <div mat-card-avatar [style.backgroundImage]="'url('+ book.image_url +')'" style="background-size: cover;">
+            </div>
+            <mat-card-title>{{ book.name }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Borrowed: <b>{{ book.borrow_date }}</b>
+            </p>
+            <p *ngIf="book.return_date">
+              Returned: <b>{{ book.return_date }}</b>
+            </p>
+          </mat-card-content>
+          <mat-card-actions *ngIf="!book.return_date" align="end">
+            <button (click)="returnBook(book.id)" mat-button>RETURN</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </ng-template>
+</mat-card>

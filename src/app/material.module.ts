@@ -14,7 +14,8 @@ import { MatCardModule,
          MatSnackBarModule,
          MatProgressBarModule,
          MatDialogModule,
-         MatAutocompleteModule} from '@angular/material';
+         MatAutocompleteModule,
+         MatProgressSpinnerModule} from '@angular/material';
 
 @NgModule({
   declarations: [],
@@ -35,7 +36,8 @@ import { MatCardModule,
     MatSnackBarModule,
     MatProgressBarModule,
     MatDialogModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatProgressSpinnerModule
   ]
 })
 export class MaterialModule { }

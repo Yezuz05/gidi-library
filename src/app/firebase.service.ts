@@ -55,10 +55,14 @@ export class FirebaseService {
     return this.afs.doc(`readers/${id}`).update(reader)
   }
 
-  lendBook(book: Book, reader: Reader) {
+  updateBookLog(book: Book, reader: Reader) {
+    const book_id = book.id;
+    const reader_id = reader.id;
+    delete book.id;
+    delete reader.id;
     return Promise.all([
-      this.afs.doc(`readers/${reader.id}`).update(reader),
-      this.afs.doc(`books/${book.id}`).update(book),
+      this.afs.doc(`readers/${reader_id}`).update(reader),
+      this.afs.doc(`books/${book_id}`).update(book),
     ])
   }
 }

@@ -25,8 +25,8 @@
             </mat-list>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-button color="primary">VIEW</button>
-            <button mat-button color="accent" [routerLink]="['edit-reader', reader.id] ">EDIT</button>
+            <button [routerLink]="['view-reader', reader.id]" mat-button color="primary">VIEW</button>
+            <button mat-button color="accent" [routerLink]="['edit-reader', reader.id]">EDIT</button>
             <button mat-button (click)="deleteReader(reader.id)" color="warn">DELETE</button>
           </mat-card-actions>
         </mat-card>
