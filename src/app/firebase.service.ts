@@ -16,6 +16,8 @@ export class FirebaseService {
               private afs: AngularFirestore) {
                 this.afAuth.authState.subscribe(state => {
                   state ? this.isLoggedIn = true : this.isLoggedIn = false;
+                  console.log(state);
+                  console.log(this.isLoggedIn);
                 })
               }
 
