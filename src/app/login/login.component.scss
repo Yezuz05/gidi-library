@@ -7,11 +7,25 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    background-image:     linear-gradient(
+        rgba(0, 0, 0, 0.7), 
+        rgba(0, 0, 0, 0.7)
+      ), url('./../../assets/img/library-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     &-card {
-        width: 350px;
-        min-height: 400px;
+        width: 500px;
+        min-height: 600px;
         color: #fff;
-        background: linear-gradient(135deg, #69B447 0%,#56953C 100%);
+        background: transparent;
+        border: 1px solid #fff;
+        padding: 0 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        // background: linear-gradient(135deg, #69B447 0%,#56953C 100%);
+        // background: linear-gradient(135deg, rgba(0, 0, 0, 0.61),rgb(0, 0, 0) 100%);
         /deep/ .mat-card-header-text {
             width: 100%;
             .mat-card-title {
@@ -19,15 +33,17 @@
                 justify-content: center;
                 margin-bottom: 30px;
                 img {
-                    width: 40%;
-                    height: 30px;
+                    width: 30%;
                 }
             }
             .mat-card-subtitle {
                 margin-bottom: 30px;
+                text-align: center;
+                & > * {
+                    color: #fff;
+                }
                 p {
                     margin: 0 auto;
-                    color: #fff;
                     font-weight: 500;
                     width: max-content;
                     &:first-child {
@@ -63,3 +79,6 @@
         font-size: 10px;
     }
 }
+
+// "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+                                                                                                                                                                                                                                     

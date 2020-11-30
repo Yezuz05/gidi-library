@@ -19,10 +19,13 @@
         }
     }
     .dashboard-toolbar {
-        background: linear-gradient(135deg, #69B447 0%,#56953C 100%);
+        // background: linear-gradient(135deg, #69B447 0%,#56953C 100%);
         box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
         .mat-row-space {
             flex: 1 1 auto;
+        }
+        .logo {
+            width: 50px;
         }
     }
     .dashboard-sidenav-container {
@@ -32,7 +35,7 @@
             box-shadow: 6px 0 6px rgba(0,0,0,.1);
             background: #fafafa;
             a.active {
-                color: #56953C;
+                color: #0073ad;
                 font-weight: 500;
             }
         }

@@ -1,4 +1,4 @@
-import { NgModule }             from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
@@ -8,6 +8,12 @@ import { ReadersListComponent } from './readers-list/readers-list.component';
 import { AddReaderComponent } from './add-reader/add-reader.component';
 import { ViewReaderComponent } from './view-reader/view-reader.component';
 import { AuthGuard } from '../auth.guard';
+
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+
+import { redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
 
 const dashboardRoutes: Routes = [
   { path: 'dashboard',  component: DashboardComponent,
@@ -21,10 +27,11 @@ const dashboardRoutes: Routes = [
         {path: 'readers/edit-reader/:id', component: AddReaderComponent},
         {path: 'readers/view-reader/:id', component: ViewReaderComponent},
     ],
-   canActivate: [AuthGuard]
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
 ];
- 
+
 @NgModule({
   imports: [
     RouterModule.forChild(dashboardRoutes)

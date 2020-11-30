@@ -7,29 +7,29 @@
     </mat-form-field>
     <button mat-raised-button routerLink="add-reader">
       <mat-icon>add</mat-icon>
-      Add Reader
+      Add Student
     </button>
   </mat-card-header>
   <mat-card-content>
     <div class="readers">
       <mat-card *ngFor="let reader of readers">
-          <mat-card-content>
-            <mat-list>
-              <mat-list-item>
-                <img matListAvatar [src]="reader.image_url" alt="...">
-                <h3 matLine> {{ reader.name | titlecase }} </h3>
-                <p matLine>
-                  {{ reader.email }}
-                </p>
-              </mat-list-item>
-            </mat-list>
-          </mat-card-content>
-          <mat-card-actions>
-            <button [routerLink]="['view-reader', reader.id]" mat-button color="primary">VIEW</button>
-            <button mat-button color="accent" [routerLink]="['edit-reader', reader.id]">EDIT</button>
-            <button mat-button (click)="deleteReader(reader.id)" color="warn">DELETE</button>
-          </mat-card-actions>
-        </mat-card>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <img matListAvatar [src]="reader.image_url" alt="...">
+              <h3 matLine> {{ reader.name | titlecase }} </h3>
+              <p matLine>
+                {{ reader.email }}
+              </p>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+        <mat-card-actions>
+          <button [routerLink]="['view-reader', reader.id]" mat-button color="primary">VIEW</button>
+          <button mat-button color="accent" [routerLink]="['edit-reader', reader.id]">EDIT</button>
+          <button mat-button (click)="deleteReader(reader.id)" color="warn">DELETE</button>
+        </mat-card-actions>
+      </mat-card>
     </div>
   </mat-card-content>
 </mat-card>

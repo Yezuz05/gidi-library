@@ -16,9 +16,7 @@ export class FirebaseService {
               private afs: AngularFirestore) {
                 this.afAuth.authState.subscribe(state => {
                   state ? this.isLoggedIn = true : this.isLoggedIn = false;
-                  console.log(state);
-                  console.log(this.isLoggedIn);
-                })
+                });
               }
 
   login(user) {
@@ -27,9 +25,9 @@ export class FirebaseService {
 
   logout() {
     return this.afAuth.auth.signOut()
-    .then(()=>{
+    .then(() => {
       this.router.navigate(['/login']);
-    })
+    });
   }
 
   getBooks() {
@@ -80,6 +78,6 @@ export class FirebaseService {
     return Promise.all([
       this.afs.doc(`readers/${reader_id}`).update(reader),
       this.afs.doc(`books/${book_id}`).update(book),
-    ])
+    ]);
   }
 }

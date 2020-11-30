@@ -12,7 +12,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
     <h2 mat-dialog-title>Lend Book</h2>
     <mat-dialog-content class="mat-typography">
       <mat-form-field class="field" *ngIf="readers.length > 0">
-        <input type="text" placeholder="Select Reader" matInput [formControl]="readerControl" [matAutocomplete]="auto">
+        <input type="text" placeholder="Select Student" matInput [formControl]="readerControl" [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
           <mat-option *ngFor="let reader of filteredReaders | async" [value]="reader">
             {{ reader.name }}
