@@ -9,35 +9,26 @@ import { AddReaderComponent } from './add-reader/add-reader.component';
 import { ViewReaderComponent } from './view-reader/view-reader.component';
 import { AuthGuard } from '../auth.guard';
 
-import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
-
-import { redirectUnauthorizedTo } from '@angular/fire/auth-guard';
-
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
-
 const dashboardRoutes: Routes = [
-  { path: 'dashboard',  component: DashboardComponent,
-     children: [
-        {path: '', redirectTo: 'books', pathMatch: 'full'},
-        {path: 'books', component: BooksListComponent},
-        {path: 'books/add-book', component: AddBookComponent},
-        {path: 'books/edit-book/:id', component: AddBookComponent},
-        {path: 'readers', component: ReadersListComponent},
-        {path: 'readers/add-reader', component: AddReaderComponent},
-        {path: 'readers/edit-reader/:id', component: AddReaderComponent},
-        {path: 'readers/view-reader/:id', component: ViewReaderComponent},
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    children: [
+      { path: '', redirectTo: 'books', pathMatch: 'full' },
+      { path: 'books', component: BooksListComponent },
+      { path: 'books/add-book', component: AddBookComponent },
+      { path: 'books/edit-book/:id', component: AddBookComponent },
+      { path: 'readers', component: ReadersListComponent },
+      { path: 'readers/add-reader', component: AddReaderComponent },
+      { path: 'readers/edit-reader/:id', component: AddReaderComponent },
+      { path: 'readers/view-reader/:id', component: ViewReaderComponent },
     ],
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin }
+    canActivate: [AuthGuard],
   },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(dashboardRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(dashboardRoutes)],
+  exports: [RouterModule],
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {}

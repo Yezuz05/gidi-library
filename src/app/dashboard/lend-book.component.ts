@@ -12,9 +12,18 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
     <h2 mat-dialog-title>Lend Book</h2>
     <mat-dialog-content class="mat-typography">
       <mat-form-field class="field" *ngIf="readers.length > 0">
-        <input type="text" placeholder="Select Student" matInput [formControl]="readerControl" [matAutocomplete]="auto">
+        <input
+          type="text"
+          placeholder="Select Student"
+          matInput
+          [formControl]="readerControl"
+          [matAutocomplete]="auto"
+        />
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-          <mat-option *ngFor="let reader of filteredReaders | async" [value]="reader">
+          <mat-option
+            *ngFor="let reader of filteredReaders | async"
+            [value]="reader"
+          >
             {{ reader.name }}
           </mat-option>
         </mat-autocomplete>
@@ -25,30 +34,32 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
       <button mat-button cdkFocusInitial (click)="lendBook()">LEND</button>
     </mat-dialog-actions>
   `,
-  styles: [`
-    .field {
-      width: 100%;
-    }
-  `]
+  styles: [
+    `
+      .field {
+        width: 100%;
+      }
+    `,
+  ],
 })
 export class LendBookComponent implements OnInit {
-
   readers = [];
   isFetchingReaders: boolean;
   readerControl = this.fb.control(null);
   filteredReaders: Observable<any[]>;
 
-  constructor(private fireService: FirebaseService,
-              private fb: FormBuilder,
-              public dialogRef: MatDialogRef<LendBookComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    private fireService: FirebaseService,
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<LendBookComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   ngOnInit() {
     this.getReaders();
-    this.filteredReaders = this.readerControl.valueChanges
-    .pipe(
+    this.filteredReaders = this.readerControl.valueChanges.pipe(
       startWith(''),
-      map(value => this.filter(value))
+      map((value) => this.filter(value))
     );
   }
 
@@ -60,34 +71,51 @@ export class LendBookComponent implements OnInit {
     const reader: Reader = this.readerControl.value;
     const book: Book = this.data.book;
     book.is_borrowed = true;
-    book.logs.push({book_id: book.id, borrow_date: new Date().toDateString(), reader_id: reader.id, return_date: null});
-    reader.books_borrowed.push({book_id: book.id, borrow_date: new Date().toDateString(), reader_id: reader.id, return_date: null});
-    this.fireService.updateBookLog(book, reader)
-      .then(result =>{
+    book.logs.push({
+      book_id: book.id,
+      borrow_date: new Date().toDateString(),
+      reader_id: reader.id,
+      return_date: null,
+    });
+    reader.books_borrowed.push({
+      book_id: book.id,
+      borrow_date: new Date().toDateString(),
+      reader_id: reader.id,
+      return_date: null,
+    });
+    this.fireService
+      .updateBookLog(book, reader)
+      .then((result) => {
         this.dialogRef.close(true);
         console.log(result);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })
+      });
   }
 
   getReaders() {
     this.isFetchingReaders = true;
-    this.fireService.getReaders().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data();
-        const id = a.payload.doc.id;
-        return { id, ...data};
-      }))
-      ).subscribe(result =>{
+    this.fireService
+      .getReaders()
+      .pipe(
+        map((actions) =>
+          actions.map((a) => {
+            const data = a.payload.doc.data() as any;
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          })
+        )
+      )
+      .subscribe((result) => {
         this.readers = result;
         this.isFetchingReaders = false;
-      })
+      });
   }
 
   private filter(value: string) {
-    return this.readers.filter(reader => new RegExp(value, 'i').test(reader.name));
+    return this.readers.filter((reader) =>
+      new RegExp(value, 'i').test(reader.name)
+    );
   }
-
 }
