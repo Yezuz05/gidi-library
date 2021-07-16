@@ -17,6 +17,7 @@ import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { GraphQLModule } from './graphql.module';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -32,6 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     AngularFireStorageModule,
+    GraphQLModule,
   ],
   providers: [AngularFireAuthGuard],
   bootstrap: [AppComponent],

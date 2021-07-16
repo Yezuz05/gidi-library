@@ -6,39 +6,49 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { FirebaseService } from 'src/app/firebase.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthorsService } from 'src/app/services/authors.service';
 
 @Component({
   selector: 'app-add-book',
   templateUrl: './add-book.component.html',
-  styleUrls: ['./add-book.component.scss']
+  styleUrls: ['./add-book.component.scss'],
 })
 export class AddBookComponent implements OnInit {
-
   bookForm = this.fb.group({
     name: [null, Validators.required],
     author: [null, Validators.required],
     isbn: [null, Validators.required],
     pages: [null, Validators.required],
     description: [null, Validators.required],
-    image_url: [null, Validators.required]
+    image_url: [null, Validators.required],
   });
   fileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
   isUploadingFile = false;
   bookId: string;
+  authors = [];
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private storage: AngularFireStorage,
     private snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
-    private fireService: FirebaseService) { }
+    private authorsService: AuthorsService,
+    private fireService: FirebaseService
+  ) {}
 
   ngOnInit() {
-    this.route.paramMap
-      .subscribe(params => {
-        this.bookId = params.get('id');
-        this.getBook();
-      })
+    this.getAuthors();
+    this.route.paramMap.subscribe((params) => {
+      this.bookId = params.get('id');
+      this.getBook();
+    });
+  }
+
+  getAuthors() {
+    this.authorsService.getAuthors().then((res) => {
+      console.log(res);
+    });
   }
 
   upload(event) {
@@ -48,20 +58,21 @@ export class AddBookComponent implements OnInit {
       const filePath = `${image_file.name}-${new Date().toISOString()}`;
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, image_file);
-      task.snapshotChanges().pipe(
-        finalize(() => {
-          fileRef.getDownloadURL()
-            .subscribe(url => {
-              this.bookForm.patchValue({ image_url: url })
+      task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            fileRef.getDownloadURL().subscribe((url) => {
+              this.bookForm.patchValue({ image_url: url });
               this.isUploadingFile = false;
-            })
-        })
-      )
-        .subscribe()
+            });
+          })
+        )
+        .subscribe();
     } else {
       this.snackBar.open('Upload image of type PNG, JPEG or GIF', '', {
         duration: 2500,
-        verticalPosition: 'top'
+        verticalPosition: 'top',
       });
     }
   }
@@ -72,38 +83,38 @@ export class AddBookComponent implements OnInit {
   }
 
   addBook(form) {
-    this.fireService.addBook({...form, is_borrowed: false, logs: []})
-      .then(res => {
-        this.router.navigate(['../'], { relativeTo: this.route })
+    this.fireService
+      .addBook({ ...form, is_borrowed: false, logs: [] })
+      .then((res) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
       })
-      .catch(err => {
+      .catch((err) => {
         this.snackBar.open(err.message, '', {
           duration: 2500,
-          verticalPosition: 'top'
+          verticalPosition: 'top',
         });
-      })
-  }
-    
-  updateBook(form) {
-    this.fireService.updateBook(form, this.bookId)
-    .then((res) =>{
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    })
-    .catch(err => {
-      this.snackBar.open(err.message, '', {
-        duration: 2500,
-        verticalPosition: 'top'
       });
-    })
+  }
+
+  updateBook(form) {
+    this.fireService
+      .updateBook(form, this.bookId)
+      .then((res) => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      })
+      .catch((err) => {
+        this.snackBar.open(err.message, '', {
+          duration: 2500,
+          verticalPosition: 'top',
+        });
+      });
   }
 
   getBook() {
     if (this.bookId) {
-      this.fireService.getBook(this.bookId)
-        .subscribe(res => {
-          this.bookForm.patchValue(res.payload.data());
-        })
+      this.fireService.getBook(this.bookId).subscribe((res) => {
+        this.bookForm.patchValue(res.payload.data());
+      });
     }
   }
-
 }
