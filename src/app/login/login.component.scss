@@ -29,7 +29,7 @@
     justify-content: center;
     // background: linear-gradient(135deg, #69B447 0%,#56953C 100%);
     // background: linear-gradient(135deg, rgba(0, 0, 0, 0.61),rgb(0, 0, 0) 100%);
-    /deep/ .mat-card-header-text {
+    ::ng-deep .mat-card-header-text {
       width: 100%;
       .mat-card-title {
         display: flex;
@@ -61,18 +61,18 @@
     }
     mat-form-field {
       width: 100%;
-      /deep/ .mat-form-field-label {
+      ::ng-deep .mat-form-field-label {
         color: #fff;
       }
 
-      /deep/ .mat-form-field-underline {
+      ::ng-deep .mat-form-field-underline {
         background-color: #fff;
       }
       .mat-form-field-ripple {
         background-color: #fff;
       }
       .mat-form-field.mat-form-field-invalid .mat-form-field-ripple,
-      /deep/
+      ::ng-deep
         .mat-form-field.mat-form-field-invalid
         .mat-form-field-ripple.mat-accent {
         background-color: #f44336;
@@ -84,7 +84,7 @@
         opacity: 0.8;
         mat-spinner {
           margin-inline: auto;
-          /deep/ svg {
+          ::ng-deep svg {
             circle {
               stroke: #fff;
             }
