@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Book } from '../interfaces';
 import { Observable } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DeleteComponent } from '../delete.component';
 import { FirebaseService } from 'src/app/firebase.service';
 import { LendBookComponent } from '../lend-book.component';

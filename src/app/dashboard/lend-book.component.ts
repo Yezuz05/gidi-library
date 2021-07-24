@@ -4,7 +4,7 @@ import { map, startWith } from 'rxjs/operators';
 import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Reader, Book } from './interfaces';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-lend-book',

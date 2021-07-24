@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { FirebaseService } from 'src/app/firebase.service';
 import { map, debounceTime } from 'rxjs/operators';
 import { DeleteComponent } from '../delete.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-readers-list',
