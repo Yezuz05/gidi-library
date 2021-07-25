@@ -48,7 +48,7 @@ export class BooksListComponent implements OnInit {
     this.isFetchingBooks = true;
     this.booksService
       .getBooks()
-      .valueChanges.subscribe((res: ApolloQueryResult<{ books: Book[] }>) => {
+      .subscribe((res: ApolloQueryResult<{ books: Book[] }>) => {
         this.isFetchingBooks = false;
         this.booksSource = res.data.books.map((book) => {
           return {
@@ -63,8 +63,13 @@ export class BooksListComponent implements OnInit {
   }
 
   deleteBook(id) {
-    this.dialog.open(DeleteComponent, {
-      data: { id, type: 0 },
+    const deleteDialogRef = this.dialog.open(DeleteComponent, {
+      data: { id, type: 'book' },
+    });
+    deleteDialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getBooks();
+      }
     });
   }
 
@@ -115,7 +120,7 @@ export class BooksListComponent implements OnInit {
 
   searchBooks(searchTerm) {
     this.books = this.booksSource.filter((book) =>
-      new RegExp(searchTerm.trim(), 'i').test(book.name)
+      new RegExp(searchTerm.trim(), 'i').test(book.title)
     );
   }
 

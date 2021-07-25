@@ -15,9 +15,9 @@ export class BooksService {
   constructor(private apollo: Apollo) {}
 
   getBooks(where = {}) {
-    return this.apollo.watchQuery({
+    return this.apollo.query({
       query: BooksQuery,
-      variables: { where },
+      variables: { where: { ...where, is_deleted: { _eq: false } } },
       fetchPolicy: 'network-only',
     });
   }

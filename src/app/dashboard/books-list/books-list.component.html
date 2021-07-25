@@ -5,13 +5,13 @@
       <input type="search" matInput [formControl]="searchControl" placeholder="Search by book name...">
       <mat-icon matPrefix>search</mat-icon>
     </mat-form-field>
-    <mat-form-field>
+    <!-- <mat-form-field>
       <mat-select [formControl]="filterControl" (ngModelChange)="selectChange($event)">
         <mat-option value="all">All</mat-option>
         <mat-option value="borrowed">Borrowed</mat-option>
         <mat-option value="available">Available</mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
     <button mat-raised-button routerLink="add-book">
       <mat-icon>add</mat-icon>
       Add Book
