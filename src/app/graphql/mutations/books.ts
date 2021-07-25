@@ -10,6 +10,7 @@ export const addBookMutation = gql`
       quantity
       title
       volume
+      borrowed_quantity
       books_authors {
         author {
           bio
@@ -30,6 +31,7 @@ export const updateBookMutation = gql`
       no_of_pages
       quantity
       title
+      borrowed_quantity
       volume
       books_authors {
         author {
@@ -62,6 +64,48 @@ export const deleteBookAuthorMutation = gql`
     ) {
       returning {
         author_id
+      }
+    }
+  }
+`;
+
+export const addBorrowLogMutation = gql`
+  mutation addBorrowLogMutation($object: borrow_logs_insert_input!) {
+    insert_borrow_logs_one(object: $object) {
+      borrow_date
+      book_id
+      created_at
+      id
+      return_date
+      student_id
+      updated_at
+      student {
+        created_at
+        email
+        first_name
+        last_name
+        matric_number
+      }
+    }
+  }
+`;
+
+export const updateBorrowLogMutation = gql`
+  mutation updateBorrowLogMutation($id: Int!, $set: borrow_logs_set_input) {
+    update_borrow_logs_by_pk(pk_columns: { id: $id }, _set: $set) {
+      borrow_date
+      book_id
+      created_at
+      id
+      return_date
+      student_id
+      updated_at
+      student {
+        created_at
+        email
+        first_name
+        last_name
+        matric_number
       }
     }
   }

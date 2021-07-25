@@ -11,6 +11,7 @@ export const BooksQuery = gql`
       title
       updated_at
       volume
+      borrowed_quantity
       image
       no_of_pages
       description
@@ -33,6 +34,7 @@ export const BookQuery = gql`
       is_journal
       isbn
       quantity
+      borrowed_quantity
       title
       updated_at
       volume

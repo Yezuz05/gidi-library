@@ -80,7 +80,8 @@ export class BooksListComponent implements OnInit {
     });
     lendDialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.selectChange(this.filterControl.value);
+        this.getBooks();
+        // this.selectChange(this.filterControl.value);
       }
     });
   }

@@ -34,9 +34,16 @@
             <p>
               ISBN: {{ book.isbn }}
             </p>
+            <p>
+              Total copies: {{ book.quantity }}
+            </p>
+            <p>
+              Copies available: {{ book.quantity - book.borrowed_quantity }}
+            </p>
           </mat-card-content>
           <mat-card-actions>
-            <button *ngIf="!book.is_borrowed" mat-button (click)="lend(book)" color="primary">LEND</button>
+            <button *ngIf="book.quantity - book.borrowed_quantity" mat-button (click)="lend(book)"
+              color="primary">LEND</button>
             <button mat-button color="accent" [routerLink]="['edit-book', book.id] ">EDIT</button>
             <button mat-button color="warn" (click)="deleteBook(book.id)">DELETE</button>
           </mat-card-actions>

@@ -3,8 +3,10 @@ import { Apollo } from 'apollo-angular';
 import {
   addBookAuthorMutation,
   addBookMutation,
+  addBorrowLogMutation,
   deleteBookAuthorMutation,
   updateBookMutation,
+  updateBorrowLogMutation,
 } from '../graphql/mutations';
 import { BookQuery, BooksQuery } from '../graphql/queries';
 
@@ -55,6 +57,20 @@ export class BooksService {
     return this.apollo.mutate({
       mutation: deleteBookAuthorMutation,
       variables: { bookId, authorIds },
+    });
+  }
+
+  lendBook(data) {
+    return this.apollo.mutate({
+      mutation: addBorrowLogMutation,
+      variables: { object: data },
+    });
+  }
+
+  returnBook({ id, set }) {
+    return this.apollo.mutate({
+      mutation: updateBorrowLogMutation,
+      variables: { id, set },
     });
   }
 }

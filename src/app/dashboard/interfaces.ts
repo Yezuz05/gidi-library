@@ -8,6 +8,8 @@ export interface Book {
   description: string;
   image: string;
   is_borrowed: boolean;
+  quantity: number;
+  borrowed_quantity: number;
   borrow_logs: BorrowLog[];
   books_authors: any[];
 }
@@ -33,6 +35,9 @@ export interface Student {
 
 export interface BorrowLog {
   student_id: string;
+  id: string | number;
+  student: Student;
+  book: Book;
   book_id: string;
   borrow_date: string;
   return_date: string;

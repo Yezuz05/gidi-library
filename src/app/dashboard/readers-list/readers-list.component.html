@@ -16,8 +16,8 @@
         <mat-card-content>
           <mat-list>
             <mat-list-item>
-              <img matListAvatar [src]="reader.image_url" alt="...">
-              <h3 matLine> {{ reader.name | titlecase }} </h3>
+              <img matListAvatar [src]="reader.profile_picture" [alt]="reader.first_name">
+              <h3 matLine> {{ reader.first_name | titlecase }} {{ reader.last_name | titlecase }}</h3>
               <p matLine>
                 {{ reader.email }}
               </p>

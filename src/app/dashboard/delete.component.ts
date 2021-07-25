@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FirebaseService } from '../firebase.service';
 import { BooksService } from '../services/books.service';
+import { StudentsService } from '../services/students.service';
 
 @Component({
   selector: 'app-delete',
@@ -28,6 +29,7 @@ export class DeleteComponent implements OnInit {
     public dialogRef: MatDialogRef<DeleteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private booksService: BooksService,
+    private studentService: StudentsService,
     private snackBar: MatSnackBar
   ) {}
 
@@ -39,6 +41,29 @@ export class DeleteComponent implements OnInit {
         try {
           await this.booksService
             .updateBook({
+              id: this.data.id,
+              set: { is_deleted: true },
+            })
+            .toPromise();
+          this.dialogRef.close(true);
+        } catch (err) {
+          console.log({ err });
+          this.dialogRef.close();
+          this.snackBar.open(
+            `An error occurred while deleting ${this.data.type}`,
+            '',
+            {
+              duration: 2500,
+              verticalPosition: 'top',
+              panelClass: ['error', 'notification'],
+            }
+          );
+        }
+        break;
+      case 'student':
+        try {
+          await this.studentService
+            .updateStudent({
               id: this.data.id,
               set: { is_deleted: true },
             })

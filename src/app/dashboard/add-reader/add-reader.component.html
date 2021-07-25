@@ -12,20 +12,42 @@
       </label>
       <p>
         <mat-form-field>
-          <input formControlName="name" matInput placeholder="Name">
+          <input formControlName="first_name" matInput placeholder="First Name">
         </mat-form-field>
         <mat-form-field>
-          <input type="email" formControlName="email" matInput placeholder="Email">
+          <input formControlName="last_name" matInput placeholder="Last Name">
         </mat-form-field>
       </p>
       <p>
         <mat-form-field>
-          <textarea formControlName="address" matInput placeholder="Contact Address" rows="10"></textarea>
+          <input type="number" formControlName="matric_number" matInput placeholder="Matric Number">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="tel" formControlName="telephone" matInput placeholder="Phone Number">
         </mat-form-field>
       </p>
       <p>
-        <button [disabled]="readerForm.invalid" color="primary" mat-raised-button>{{ readerId ? 'Update' : 'Add'}}
-          Student</button>
+        <mat-form-field>
+          <input type="email" formControlName="email" matInput placeholder="Email Address">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <textarea formControlName="home_address" matInput placeholder="Home Address" rows="10"></textarea>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea formControlName="hostel_address" matInput placeholder="Hostel Address" rows="10"></textarea>
+        </mat-form-field>
+      </p>
+      <p>
+        <button [disabled]="readerForm.invalid" color="primary" mat-raised-button>
+          <mat-spinner style="margin-inline: 15px; margin-block: 5px;" [diameter]="30" color="accent"
+            *ngIf="isSavingStudent else defaultTemplate"></mat-spinner>
+          <ng-template #defaultTemplate>
+            {{ readerId ? 'Update' : 'Add' }}
+            Student
+          </ng-template>
+        </button>
       </p>
     </form>
   </mat-card-content>

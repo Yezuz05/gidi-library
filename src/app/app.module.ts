@@ -19,6 +19,8 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { GraphQLModule } from './graphql.module';
 
+import { MomentModule } from 'ngx-moment';
+
 @NgModule({
   declarations: [AppComponent, LoginComponent],
   imports: [
@@ -34,6 +36,7 @@ import { GraphQLModule } from './graphql.module';
     AngularFireAuthModule,
     AngularFireStorageModule,
     GraphQLModule,
+    MomentModule,
   ],
   providers: [AngularFireAuthGuard],
   bootstrap: [AppComponent],

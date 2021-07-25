@@ -3,8 +3,12 @@ import { FirebaseService } from '../firebase.service';
 import { map, startWith } from 'rxjs/operators';
 import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Reader, Book } from './interfaces';
+import { Reader, Book, Student } from './interfaces';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { StudentsService } from '../services/students.service';
+import { ApolloQueryResult } from '@apollo/client/core';
+import { cloneDeep } from '@apollo/client/utilities';
+import { BooksService } from '../services/books.service';
 
 @Component({
   selector: 'app-lend-book',
@@ -24,7 +28,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
             *ngFor="let reader of filteredReaders | async"
             [value]="reader"
           >
-            {{ reader.name }}
+            {{ reader.first_name }} {{ reader.last_name }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
@@ -50,6 +54,8 @@ export class LendBookComponent implements OnInit {
 
   constructor(
     private fireService: FirebaseService,
+    private studentsService: StudentsService,
+    private booksService: BooksService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<LendBookComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -64,58 +70,46 @@ export class LendBookComponent implements OnInit {
   }
 
   displayFn(reader): string | undefined {
-    return reader ? reader.name : undefined;
+    return reader ? `${reader.first_name} ${reader.last_name}` : undefined;
   }
 
-  lendBook() {
+  async lendBook() {
     const reader: Reader = this.readerControl.value;
     const book: Book = this.data.book;
-    book.is_borrowed = true;
-    book.logs.push({
+    const data = {
+      student_id: reader.id,
       book_id: book.id,
-      borrow_date: new Date().toDateString(),
-      reader_id: reader.id,
-      return_date: null,
-    });
-    reader.books_borrowed.push({
-      book_id: book.id,
-      borrow_date: new Date().toDateString(),
-      reader_id: reader.id,
-      return_date: null,
-    });
-    this.fireService
-      .updateBookLog(book, reader)
-      .then((result) => {
-        this.dialogRef.close(true);
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    };
+    try {
+      await this.booksService.lendBook(data).toPromise();
+      await this.booksService
+        .updateBook({
+          id: book.id,
+          set: { borrowed_quantity: book.borrowed_quantity + 1 },
+        })
+        .toPromise();
+      this.dialogRef.close(true);
+    } catch (e) {
+      this.dialogRef.close(true);
+      console.log({ e });
+    }
   }
 
   getReaders() {
     this.isFetchingReaders = true;
-    this.fireService
-      .getReaders()
-      .pipe(
-        map((actions) =>
-          actions.map((a) => {
-            const data = a.payload.doc.data() as any;
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          })
-        )
-      )
-      .subscribe((result) => {
-        this.readers = result;
+    this.studentsService
+      .getStudents()
+      .subscribe((res: ApolloQueryResult<{ students: Student[] }>) => {
+        this.readers = cloneDeep(res.data.students);
         this.isFetchingReaders = false;
       });
   }
 
   private filter(value: string) {
-    return this.readers.filter((reader) =>
-      new RegExp(value, 'i').test(reader.name)
+    return this.readers.filter(
+      (reader) =>
+        new RegExp(value.trim(), 'i').test(reader.first_name) ||
+        new RegExp(value.trim(), 'i').test(reader.last_name)
     );
   }
 }
