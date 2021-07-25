@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-} from '@angular/fire/firestore';
 import { Book } from '../interfaces';
-import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteComponent } from '../delete.component';
-import { FirebaseService } from 'src/app/firebase.service';
+// import { FirebaseService } from 'src/app/firebase.service';
 import { LendBookComponent } from '../lend-book.component';
 import { BooksService } from 'src/app/services/books.service';
 import { ApolloQueryResult } from '@apollo/client/core';
@@ -29,7 +25,6 @@ export class BooksListComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private fireService: FirebaseService,
     private booksService: BooksService,
     public dialog: MatDialog
   ) {
@@ -86,38 +81,38 @@ export class BooksListComponent implements OnInit {
     });
   }
 
-  selectChange(event) {
-    switch (event) {
-      case 'all':
-        this.getBooks();
-        break;
-      case 'borrowed':
-        this.getBooksBy(true);
-        break;
-      case 'available':
-        this.getBooksBy(false);
-        break;
-      default:
-        break;
-    }
-  }
+  // selectChange(event) {
+  //   switch (event) {
+  //     case 'all':
+  //       this.getBooks();
+  //       break;
+  //     case 'borrowed':
+  //       this.getBooksBy(true);
+  //       break;
+  //     case 'available':
+  //       this.getBooksBy(false);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
-  getBooksBy(borrow_state) {
-    this.fireService
-      .filterBooks(borrow_state)
-      .pipe(
-        map((actions) =>
-          actions.map((a) => {
-            const data = a.payload.doc.data() as Book;
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          })
-        )
-      )
-      .subscribe((result) => {
-        this.displayBooks();
-      });
-  }
+  // getBooksBy(borrow_state) {
+  //   this.fireService
+  //     .filterBooks(borrow_state)
+  //     .pipe(
+  //       map((actions) =>
+  //         actions.map((a) => {
+  //           const data = a.payload.doc.data() as Book;
+  //           const id = a.payload.doc.id;
+  //           return { id, ...data };
+  //         })
+  //       )
+  //     )
+  //     .subscribe((result) => {
+  //       this.displayBooks();
+  //     });
+  // }
 
   searchBooks(searchTerm) {
     this.books = this.booksSource.filter((book) =>

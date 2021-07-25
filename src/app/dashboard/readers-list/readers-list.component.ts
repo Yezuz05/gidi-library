@@ -43,6 +43,7 @@ export class ReadersListComponent implements OnInit {
       .subscribe((res: ApolloQueryResult<{ students: Student[] }>) => {
         this.readersSource = cloneDeep(res.data.students);
         this.searchReaders('');
+        this.isFetchingStudents = false;
       });
   }
 
