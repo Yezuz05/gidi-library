@@ -5,8 +5,8 @@
   <mat-card-content>
     <form [formGroup]="readerForm" (ngSubmit)="submit()">
       <label class="img" for="image">
-        <img *ngIf="readerForm.value.image_url" [src]="readerForm.value.image_url">
-        <mat-icon *ngIf="!readerForm.value.image_url">add_a_photo</mat-icon>
+        <img *ngIf="readerForm.value.profile_picture" [src]="readerForm.value.profile_picture">
+        <mat-icon *ngIf="!readerForm.value.profile_picture">add_a_photo</mat-icon>
         <input id="image" type="file" hidden (change)="upload($event)">
         <mat-progress-bar *ngIf="isUploadingFile" mode="indeterminate"></mat-progress-bar>
       </label>

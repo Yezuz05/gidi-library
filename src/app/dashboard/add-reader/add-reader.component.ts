@@ -8,6 +8,7 @@ import { finalize } from 'rxjs/operators';
 import { StudentsService } from 'src/app/services/students.service';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Student } from '../interfaces';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-add-reader',
@@ -23,7 +24,7 @@ export class AddReaderComponent implements OnInit {
     home_address: [null, Validators.required],
     telephone: [null, Validators.required],
     hostel_address: [null, Validators.required],
-    profile_picture: [null],
+    profile_picture: [null, Validators.required],
   });
   fileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
   isUploadingFile = false;
@@ -33,12 +34,11 @@ export class AddReaderComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private storage: AngularFireStorage,
     private snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
     private studentsService: StudentsService,
-    private fireService: FirebaseService
+    private appService: AppService
   ) {}
 
   ngOnInit() {
@@ -48,28 +48,16 @@ export class AddReaderComponent implements OnInit {
     });
   }
 
-  upload(event) {
+  async upload(event) {
     const image_file: File = event.target.files[0];
     if (this.fileTypes.includes(image_file.type)) {
-      this.isUploadingFile = true;
-      const filePath = `${image_file.name}-${new Date().toISOString()}`;
-      const fileRef = this.storage.ref(filePath);
-      const task = this.storage.upload(filePath, image_file);
-      task
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            fileRef.getDownloadURL().subscribe((url) => {
-              this.readerForm.patchValue({ profile_picture: url });
-              this.isUploadingFile = false;
-            });
-          })
-        )
-        .subscribe();
+      const base64Url = await this.appService.blobToData(image_file);
+      this.readerForm.patchValue({ profile_picture: base64Url });
     } else {
       this.snackBar.open('Upload image of type PNG, JPEG or GIF', '', {
         duration: 2500,
         verticalPosition: 'top',
+        panelClass: ['error', 'notification'],
       });
     }
   }

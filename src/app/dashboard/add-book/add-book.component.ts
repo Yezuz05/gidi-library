@@ -11,6 +11,7 @@ import { ApolloQueryResult } from '@apollo/client/core';
 import { cloneDeep } from '@apollo/client/utilities';
 import { BooksService } from 'src/app/services/books.service';
 import { Book } from '../interfaces';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-add-book',
@@ -25,7 +26,7 @@ export class AddBookComponent implements OnInit {
     no_of_pages: [null, Validators.required],
     quantity: [null, Validators.required],
     description: [null],
-    image: [null],
+    image: [null, Validators.required],
   });
   fileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
   isUploadingFile = false;
@@ -36,13 +37,12 @@ export class AddBookComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private storage: AngularFireStorage,
     private snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
     private authorsService: AuthorsService,
     private booksService: BooksService,
-    private fireService: FirebaseService
+    private appService: AppService
   ) {}
 
   ngOnInit() {
@@ -61,24 +61,11 @@ export class AddBookComponent implements OnInit {
       });
   }
 
-  upload(event) {
+  async upload(event) {
     const image_file: File = event.target.files[0];
     if (this.fileTypes.includes(image_file.type)) {
-      this.isUploadingFile = true;
-      const filePath = `${image_file.name}-${new Date().toISOString()}`;
-      const fileRef = this.storage.ref(filePath);
-      const task = this.storage.upload(filePath, image_file);
-      task
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            fileRef.getDownloadURL().subscribe((url) => {
-              this.bookForm.patchValue({ image: url });
-              this.isUploadingFile = false;
-            });
-          })
-        )
-        .subscribe();
+      const base64Url = await this.appService.blobToData(image_file);
+      this.bookForm.patchValue({ image: base64Url });
     } else {
       this.snackBar.open('Upload image of type PNG, JPEG or GIF', '', {
         duration: 2500,
