@@ -5,27 +5,27 @@ import { Reader, Book } from './dashboard/interfaces';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FirebaseService {
-
   isLoggedIn = false;
 
-  constructor(private afAuth: AngularFireAuth,
-              private router: Router,
-              private afs: AngularFirestore) {
-                this.afAuth.authState.subscribe(state => {
-                  state ? this.isLoggedIn = true : this.isLoggedIn = false;
-                });
-              }
+  constructor(
+    private afAuth: AngularFireAuth,
+    private router: Router,
+    private afs: AngularFirestore
+  ) {
+    this.afAuth.authState.subscribe((state) => {
+      state ? (this.isLoggedIn = true) : (this.isLoggedIn = false);
+    });
+  }
 
   login(user) {
-    return this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
+    return this.afAuth.signInWithEmailAndPassword(user.email, user.password);
   }
 
   logout() {
-    return this.afAuth.auth.signOut()
-    .then(() => {
+    return this.afAuth.signOut().then(() => {
       this.router.navigate(['/login']);
     });
   }
@@ -39,11 +39,11 @@ export class FirebaseService {
   }
 
   getBook(id) {
-    return this.afs.doc(`books/${id}`).snapshotChanges()
+    return this.afs.doc(`books/${id}`).snapshotChanges();
   }
 
   updateBook(book, id) {
-    return this.afs.doc(`books/${id}`).update(book)
+    return this.afs.doc(`books/${id}`).update(book);
   }
 
   delete(path) {
@@ -51,7 +51,9 @@ export class FirebaseService {
   }
 
   filterBooks(value) {
-    return this.afs.collection('books', ref => ref.where('is_borrowed', '==', value)).snapshotChanges();
+    return this.afs
+      .collection('books', (ref) => ref.where('is_borrowed', '==', value))
+      .snapshotChanges();
   }
 
   getReaders() {
@@ -63,11 +65,11 @@ export class FirebaseService {
   }
 
   getReader(id) {
-    return this.afs.doc(`readers/${id}`).snapshotChanges()
+    return this.afs.doc(`readers/${id}`).snapshotChanges();
   }
 
   updateReader(reader, id) {
-    return this.afs.doc(`readers/${id}`).update(reader)
+    return this.afs.doc(`readers/${id}`).update(reader);
   }
 
   updateBookLog(book: Book, reader: Reader) {
