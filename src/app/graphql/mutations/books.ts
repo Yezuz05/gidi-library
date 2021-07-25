@@ -41,3 +41,28 @@ export const updateBookMutation = gql`
     }
   }
 `;
+
+export const addBookAuthorMutation = gql`
+  mutation addBookAuthorMutation($objects: [books_authors_insert_input!]!) {
+    insert_books_authors(objects: $objects) {
+      returning {
+        author_id
+        book_id
+      }
+    }
+  }
+`;
+
+export const deleteBookAuthorMutation = gql`
+  mutation deleteBookAuthorMutation($bookId: Int!, $authorIds: [Int!]!) {
+    delete_books_authors(
+      where: {
+        _and: { book_id: { _eq: $bookId }, author_id: { _in: $authorIds } }
+      }
+    ) {
+      returning {
+        author_id
+      }
+    }
+  }
+`;

@@ -2,49 +2,65 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700,900');
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-html, body { height: 100%; }
-body { 
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
+html,
+body {
+  height: 100%;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
 }
 
 button[disabled] {
-    cursor: not-allowed;
+  cursor: not-allowed;
 }
 
 form {
-    .mat-raised-button[disabled] {
-        cursor: not-allowed;
-    }
+  .mat-raised-button[disabled] {
+    cursor: not-allowed;
+  }
 }
 
-
 label.img {
-    width: 150px;
-    height: 150px;
-    display: grid;
-    position: relative;
-    justify-content: center;
-    align-content: center;
-    text-align: center;
-    background-color: #dedbdb;
-    overflow: hidden;
-    cursor: pointer;
-    img {
-        width: 100%;
-        object-fit: cover;
-        object-position: center;
-    }
-    mat-progress-bar {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        z-index: 5;
-        width: 100%;
-    }
+  width: 150px;
+  height: 150px;
+  display: grid;
+  position: relative;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  background-color: #dedbdb;
+  overflow: hidden;
+  cursor: pointer;
+  img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  mat-progress-bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 5;
+    width: 100%;
+  }
+}
+
+snack-bar-container.success {
+  background-color: #00d100;
+}
+
+snack-bar-container.error {
+  background-color: red;
+}
+
+snack-bar-container.notification {
+  font-size: 18px !important;
+  color: white;
+  font-weight: bold;
 }

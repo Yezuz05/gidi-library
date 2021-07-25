@@ -15,13 +15,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   exports: [
     MatCardModule,
     MatFormFieldModule,
@@ -37,7 +36,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatProgressBarModule,
     MatDialogModule,
     MatAutocompleteModule,
-    MatProgressSpinnerModule
-  ]
+    MatProgressSpinnerModule,
+    MatCheckboxModule,
+  ],
 })
-export class MaterialModule { }
+export class MaterialModule {}

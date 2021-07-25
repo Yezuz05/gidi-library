@@ -16,7 +16,7 @@ const authorizationHeader = (authService: AuthService) => {
   const token = authService.getToken();
   return {
     headers: {
-      Authorization: `${token}`,
+      Authorization: `Bearer ${token}`,
     },
   };
 };

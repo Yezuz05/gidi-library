@@ -12,32 +12,24 @@
       </label>
       <p>
         <mat-form-field>
-          <input formControlName="name" matInput placeholder="Name">
+          <input formControlName="title" matInput placeholder="Title">
         </mat-form-field>
-        <!-- <mat-form-field class="field" *ngIf="readers.length > 0">
-          <input
-            type="text"
-            placeholder="Select Student"
-            matInput
-            [formControl]="readerControl"
-            [matAutocomplete]="auto"
-          />
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option
-              *ngFor="let reader of filteredReaders | async"
-              [value]="reader"
-            >
-              {{ reader.name }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field> -->
+        <mat-form-field>
+          <mat-label>Author(s)</mat-label>
+          <mat-select formControlName="author" multiple>
+            <mat-option *ngFor="let author of authors" [value]="author.id">{{author.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </p>
       <p>
         <mat-form-field>
           <input formControlName="isbn" matInput placeholder="ISBN">
         </mat-form-field>
         <mat-form-field>
-          <input formControlName="pages" type="number" matInput placeholder="No. of Pages">
+          <input formControlName="no_of_pages" type="number" matInput placeholder="No. of Pages">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="quantity" type="number" matInput placeholder="Quantity">
         </mat-form-field>
       </p>
       <p>
@@ -47,8 +39,12 @@
       </p>
       <p>
         <button color="primary" [disabled]="bookForm.invalid" mat-raised-button>
-          {{ bookId ? 'Update': 'Add'}}
-          Book
+          <mat-spinner style="margin-inline: 15px; margin-block: 5px;" [diameter]="30" color="accent"
+            *ngIf="isSavingBook else defaultTemplate"></mat-spinner>
+          <ng-template #defaultTemplate>
+            {{ bookId ? 'Update': 'Add'}}
+            Book
+          </ng-template>
         </button>
       </p>
     </form>
