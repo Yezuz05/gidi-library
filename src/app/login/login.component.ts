@@ -38,9 +38,10 @@ export class LoginComponent implements OnInit {
       })
       .catch((err) => {
         this.isSubmitting = false;
-        this.snackBar.open(err.message, '', {
+        this.snackBar.open(err.error.error, '', {
           duration: 2000,
           verticalPosition: 'top',
+          panelClass: ['error', 'notification'],
         });
       });
   }
