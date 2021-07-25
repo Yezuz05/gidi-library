@@ -8,6 +8,8 @@ import { ReadersListComponent } from './readers-list/readers-list.component';
 import { AddReaderComponent } from './add-reader/add-reader.component';
 import { ViewReaderComponent } from './view-reader/view-reader.component';
 import { AuthGuard } from '../auth.guard';
+import { AuthorsListComponent } from './authors-list/authors-list.component';
+import { AddAuthorComponent } from './add-author/add-author.component';
 
 const dashboardRoutes: Routes = [
   {
@@ -22,6 +24,9 @@ const dashboardRoutes: Routes = [
       { path: 'readers/add-reader', component: AddReaderComponent },
       { path: 'readers/edit-reader/:id', component: AddReaderComponent },
       { path: 'readers/view-reader/:id', component: ViewReaderComponent },
+      { path: 'authors', component: AuthorsListComponent },
+      { path: 'authors/add-author', component: AddAuthorComponent },
+      { path: 'authors/edit-author/:id', component: AddAuthorComponent },
     ],
     canActivate: [AuthGuard],
   },

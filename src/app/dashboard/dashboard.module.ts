@@ -13,6 +13,8 @@ import { DeleteComponent } from './delete.component';
 import { LendBookComponent } from './lend-book.component';
 import { ViewReaderComponent } from './view-reader/view-reader.component';
 import { MomentModule } from 'ngx-moment';
+import { AuthorsListComponent } from './authors-list/authors-list.component';
+import { AddAuthorComponent } from './add-author/add-author.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { MomentModule } from 'ngx-moment';
     DeleteComponent,
     LendBookComponent,
     ViewReaderComponent,
+    AuthorsListComponent,
+    AddAuthorComponent,
   ],
   imports: [
     CommonModule,

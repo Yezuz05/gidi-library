@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FirebaseService } from '../firebase.service';
+import { AuthorsService } from '../services/authors.service';
 import { BooksService } from '../services/books.service';
 import { StudentsService } from '../services/students.service';
 
@@ -30,6 +31,7 @@ export class DeleteComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private booksService: BooksService,
     private studentService: StudentsService,
+    private authorsService: AuthorsService,
     private snackBar: MatSnackBar
   ) {}
 
@@ -49,15 +51,7 @@ export class DeleteComponent implements OnInit {
         } catch (err) {
           console.log({ err });
           this.dialogRef.close();
-          this.snackBar.open(
-            `An error occurred while deleting ${this.data.type}`,
-            '',
-            {
-              duration: 2500,
-              verticalPosition: 'top',
-              panelClass: ['error', 'notification'],
-            }
-          );
+          this.showErrorSnackbar();
         }
         break;
       case 'student':
@@ -72,19 +66,38 @@ export class DeleteComponent implements OnInit {
         } catch (err) {
           console.log({ err });
           this.dialogRef.close();
-          this.snackBar.open(
-            `An error occurred while deleting ${this.data.type}`,
-            '',
-            {
-              duration: 2500,
-              verticalPosition: 'top',
-              panelClass: ['error', 'notification'],
-            }
-          );
+          this.showErrorSnackbar();
+        }
+        break;
+      case 'author':
+        try {
+          await this.authorsService
+            .updateAuthor({
+              id: this.data.id,
+              set: { is_deleted: true },
+            })
+            .toPromise();
+          this.dialogRef.close(true);
+        } catch (err) {
+          console.log({ err });
+          this.dialogRef.close();
+          this.showErrorSnackbar();
         }
         break;
       default:
         break;
     }
+  }
+
+  showErrorSnackbar() {
+    this.snackBar.open(
+      `An error occurred while deleting ${this.data.type}`,
+      '',
+      {
+        duration: 2500,
+        verticalPosition: 'top',
+        panelClass: ['error', 'notification'],
+      }
+    );
   }
 }
