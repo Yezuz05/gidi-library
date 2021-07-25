@@ -5,40 +5,50 @@
       <input type="search" matInput [formControl]="searchControl" placeholder="Search by book name...">
       <mat-icon matPrefix>search</mat-icon>
     </mat-form-field>
-    <mat-form-field>
+    <!-- <mat-form-field>
       <mat-select [formControl]="filterControl" (ngModelChange)="selectChange($event)">
         <mat-option value="all">All</mat-option>
         <mat-option value="borrowed">Borrowed</mat-option>
         <mat-option value="available">Available</mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
     <button mat-raised-button routerLink="add-book">
       <mat-icon>add</mat-icon>
       Add Book
     </button>
   </mat-card-header>
   <mat-card-content>
-    <div class="books">
-      <mat-card class="book" *ngFor="let book of books">
-        <mat-card-header>
-          <mat-card-title>{{ book.name }}</mat-card-title>
-          <mat-card-subtitle>{{ book.author }}</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image [src]="book.image_url">
-        <mat-card-content>
-          <p>
-            {{ book.pages }} Pages
-          </p>
-          <p>
-            ISBN: {{ book.isbn }}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button *ngIf="!book.is_borrowed" mat-button (click)="lend(book)" color="primary">LEND</button>
-          <button mat-button color="accent" [routerLink]="['edit-book', book.id] ">EDIT</button>
-          <button mat-button color="warn" (click)="deleteBook(book.id)">DELETE</button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+    <mat-spinner *ngIf="isFetchingBooks else booksTemplate"></mat-spinner>
+    <ng-template #booksTemplate>
+      <div class="books">
+        <mat-card class="book" *ngFor="let book of books">
+          <mat-card-header>
+            <mat-card-title>{{ book.title }}</mat-card-title>
+            <mat-card-subtitle>{{ book.books_authors }}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image [src]="book.image">
+          <mat-card-content>
+            <p>
+              {{ book.no_of_pages }} Pages
+            </p>
+            <p>
+              ISBN: {{ book.isbn }}
+            </p>
+            <p>
+              Total copies: {{ book.quantity }}
+            </p>
+            <p>
+              Copies available: {{ book.quantity - book.borrowed_quantity }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button *ngIf="book.quantity - book.borrowed_quantity" mat-button (click)="lend(book)"
+              color="primary">LEND</button>
+            <button mat-button color="accent" [routerLink]="['edit-book', book.id] ">EDIT</button>
+            <button mat-button color="warn" (click)="deleteBook(book.id)">DELETE</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </ng-template>
   </mat-card-content>
 </mat-card>

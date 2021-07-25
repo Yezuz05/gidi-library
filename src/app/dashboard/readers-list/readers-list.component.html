@@ -11,25 +11,31 @@
     </button>
   </mat-card-header>
   <mat-card-content>
-    <div class="readers">
-      <mat-card *ngFor="let reader of readers">
-        <mat-card-content>
-          <mat-list>
-            <mat-list-item>
-              <img matListAvatar [src]="reader.image_url" alt="...">
-              <h3 matLine> {{ reader.name | titlecase }} </h3>
-              <p matLine>
-                {{ reader.email }}
-              </p>
-            </mat-list-item>
-          </mat-list>
-        </mat-card-content>
-        <mat-card-actions>
-          <button [routerLink]="['view-reader', reader.id]" mat-button color="primary">VIEW</button>
-          <button mat-button color="accent" [routerLink]="['edit-reader', reader.id]">EDIT</button>
-          <button mat-button (click)="deleteReader(reader.id)" color="warn">DELETE</button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+    <mat-spinner *ngIf="isFetchingStudents else readersTemplate"></mat-spinner>
+    <ng-template #readersTemplate>
+      <div class="readers">
+        <mat-card *ngFor="let reader of readers">
+          <mat-card-content>
+            <mat-list>
+              <mat-list-item>
+                <img matListAvatar [src]="reader.profile_picture" [alt]="reader.first_name">
+                <h3 matLine> {{ reader.first_name | titlecase }} {{ reader.last_name | titlecase }}</h3>
+                <p matLine>
+                  {{ reader.matric_number }}
+                </p>
+                <p matLine>
+                  {{ reader.email }}
+                </p>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+          <mat-card-actions>
+            <button [routerLink]="['view-reader', reader.id]" mat-button color="primary">VIEW</button>
+            <button mat-button color="accent" [routerLink]="['edit-reader', reader.id]">EDIT</button>
+            <button mat-button (click)="deleteReader(reader.id)" color="warn">DELETE</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </ng-template>
   </mat-card-content>
 </mat-card>

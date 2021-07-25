@@ -1,73 +1,60 @@
 import { Component, OnInit } from '@angular/core';
-import { Reader, Book } from '../interfaces';
+import { Reader, Book, Student } from '../interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { FirebaseService } from 'src/app/firebase.service';
 import { map } from 'rxjs/operators';
+import { StudentsService } from 'src/app/services/students.service';
+import { ApolloQueryResult } from '@apollo/client/core';
+import { BooksService } from 'src/app/services/books.service';
 
 @Component({
   selector: 'app-view-reader',
   templateUrl: './view-reader.component.html',
-  styleUrls: ['./view-reader.component.scss']
+  styleUrls: ['./view-reader.component.scss'],
 })
 export class ViewReaderComponent implements OnInit {
-
   readerId: string;
-  reader: Reader;
-  books= [];
-  all_books = [];
+  reader: Student;
+  books = [];
 
-  constructor(private route: ActivatedRoute,
-              private fireService: FirebaseService) {
-    this.route.paramMap.subscribe(param => {
+  constructor(
+    private route: ActivatedRoute,
+    private booksService: BooksService,
+    private studentService: StudentsService
+  ) {
+    this.route.paramMap.subscribe((param) => {
       this.readerId = param.get('id');
       this.getReader();
-    })
+    });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   getReader() {
-    this.fireService.getReader(this.readerId)
-    .subscribe(res => {  
-      this.reader = res.payload.data() as Reader;
-      this.reader['id'] = this.readerId;
-      this.getBooks();
-    })
+    this.studentService
+      .getStudentById(this.readerId)
+      .subscribe((res: ApolloQueryResult<{ students_by_pk: Student }>) => {
+        this.reader = res.data.students_by_pk;
+      });
   }
 
-  getBooks() {
-    this.fireService.getBooks().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data();
-        const id = a.payload.doc.id;
-        return { id, ...data};
-      }))
-      ).subscribe(result=>{
-        this.all_books = result;
-        this.books = this.reader.books_borrowed.map(log =>{
-          return {
-            ...this.all_books.find(book => book.id == log.book_id),
-            borrow_date: log.borrow_date,
-            return_date: log.return_date
-          }
+  async returnBook({ logId, book }) {
+    try {
+      await this.booksService
+        .returnBook({
+          id: logId,
+          set: { return_date: new Date().toISOString() },
         })
-      })
+        .toPromise();
+      await this.booksService
+        .updateBook({
+          id: book.id,
+          set: { borrowed_quantity: book.borrowed_quantity - 1 },
+        })
+        .toPromise();
+      this.getReader();
+    } catch (e) {
+      console.error({ e });
+    }
   }
-
-  returnBook(id) {
-    const readerLogIndex = this.reader.books_borrowed.findIndex(log => (log.book_id == id) && log.return_date == null);
-    const book_log = this.reader.books_borrowed[readerLogIndex];
-    book_log.return_date = new Date().toDateString();
-    const book = this.all_books.find(book => book.id == id) as Book;
-    book.is_borrowed = false;
-    const bookLogIndex = book.logs.findIndex(log => (log.reader_id === this.readerId) && log.return_date == null);
-    book.logs[bookLogIndex] = book_log;
-    this.reader.books_borrowed[readerLogIndex] = book_log;
-    this.fireService.updateBookLog(book, this.reader)
-      .then(result=>{
-        this.getReader();
-      })
-  }
-
 }

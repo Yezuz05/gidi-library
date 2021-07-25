@@ -16,13 +16,13 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
+import { GraphQLModule } from './graphql.module';
 
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent
-  ],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -30,12 +30,15 @@ import { environment } from '../environments/environment';
     MaterialModule,
     DashboardModule,
     AppRoutingModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    GraphQLModule,
+    MomentModule,
   ],
   providers: [AngularFireAuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

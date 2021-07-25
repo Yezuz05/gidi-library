@@ -5,17 +5,20 @@
   <mat-card-content>
     <form [formGroup]="bookForm" (ngSubmit)="submit()">
       <label class="img" for="image">
-        <img *ngIf="bookForm.value.image_url" [src]="bookForm.value.image_url">
-        <mat-icon *ngIf="!bookForm.value.image_url">add_a_photo</mat-icon>
+        <img *ngIf="bookForm.value.image" [src]="bookForm.value.image">
+        <mat-icon *ngIf="!bookForm.value.image">add_a_photo</mat-icon>
         <input id="image" type="file" hidden (change)="upload($event)">
         <mat-progress-bar *ngIf="isUploadingFile" mode="indeterminate"></mat-progress-bar>
       </label>
       <p>
         <mat-form-field>
-          <input formControlName="name" matInput placeholder="Name">
+          <input formControlName="title" matInput placeholder="Title">
         </mat-form-field>
         <mat-form-field>
-          <input formControlName="author" matInput placeholder="Author's Name">
+          <mat-label>Author(s)</mat-label>
+          <mat-select formControlName="author" multiple>
+            <mat-option *ngFor="let author of authors" [value]="author.id">{{author.name}}</mat-option>
+          </mat-select>
         </mat-form-field>
       </p>
       <p>
@@ -23,7 +26,10 @@
           <input formControlName="isbn" matInput placeholder="ISBN">
         </mat-form-field>
         <mat-form-field>
-          <input formControlName="pages" type="number" matInput placeholder="No. of Pages">
+          <input formControlName="no_of_pages" type="number" matInput placeholder="No. of Pages">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="quantity" type="number" matInput placeholder="Quantity">
         </mat-form-field>
       </p>
       <p>
@@ -32,8 +38,14 @@
         </mat-form-field>
       </p>
       <p>
-        <button color="primary" [disabled]="bookForm.invalid" mat-raised-button>{{ bookId ? 'Update': 'Add'}}
-          Book</button>
+        <button color="primary" [disabled]="bookForm.invalid" mat-raised-button>
+          <mat-spinner style="margin-inline: 15px; margin-block: 5px;" [diameter]="30" color="accent"
+            *ngIf="isSavingBook else defaultTemplate"></mat-spinner>
+          <ng-template #defaultTemplate>
+            {{ bookId ? 'Update': 'Add'}}
+            Book
+          </ng-template>
+        </button>
       </p>
     </form>
   </mat-card-content>

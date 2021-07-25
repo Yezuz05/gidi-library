@@ -12,15 +12,30 @@ import { AddReaderComponent } from './add-reader/add-reader.component';
 import { DeleteComponent } from './delete.component';
 import { LendBookComponent } from './lend-book.component';
 import { ViewReaderComponent } from './view-reader/view-reader.component';
+import { MomentModule } from 'ngx-moment';
+import { AuthorsListComponent } from './authors-list/authors-list.component';
+import { AddAuthorComponent } from './add-author/add-author.component';
 
 @NgModule({
-  declarations: [DashboardComponent, AddBookComponent, BooksListComponent, ReadersListComponent, AddReaderComponent, DeleteComponent, LendBookComponent, ViewReaderComponent],
+  declarations: [
+    DashboardComponent,
+    AddBookComponent,
+    BooksListComponent,
+    ReadersListComponent,
+    AddReaderComponent,
+    DeleteComponent,
+    LendBookComponent,
+    ViewReaderComponent,
+    AuthorsListComponent,
+    AddAuthorComponent,
+  ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    MomentModule,
   ],
-  entryComponents: [DeleteComponent, LendBookComponent]
+  entryComponents: [DeleteComponent, LendBookComponent],
 })
-export class DashboardModule { }
+export class DashboardModule {}

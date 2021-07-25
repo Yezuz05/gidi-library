@@ -1,84 +1,101 @@
+@import './../../assets/scss/variables.scss';
+
 .login {
-    width: 100%;
-    padding: 20px;
-    height: 100%;
+  width: 100%;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('./../../assets/img/library-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  &-card {
+    @include xs {
+      width: 100%;
+    }
+    width: 500px;
+    min-height: 600px;
+    color: #fff;
+    background: transparent;
+    border: 1px solid #fff;
+    padding: 0 30px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-    background-image:     linear-gradient(
-        rgba(0, 0, 0, 0.7), 
-        rgba(0, 0, 0, 0.7)
-      ), url('./../../assets/img/library-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    &-card {
-        width: 500px;
-        min-height: 600px;
-        color: #fff;
-        background: transparent;
-        border: 1px solid #fff;
-        padding: 0 30px;
+    justify-content: center;
+    // background: linear-gradient(135deg, #69B447 0%,#56953C 100%);
+    // background: linear-gradient(135deg, rgba(0, 0, 0, 0.61),rgb(0, 0, 0) 100%);
+    ::ng-deep .mat-card-header-text {
+      width: 100%;
+      .mat-card-title {
         display: flex;
-        flex-direction: column;
         justify-content: center;
-        // background: linear-gradient(135deg, #69B447 0%,#56953C 100%);
-        // background: linear-gradient(135deg, rgba(0, 0, 0, 0.61),rgb(0, 0, 0) 100%);
-        /deep/ .mat-card-header-text {
-            width: 100%;
-            .mat-card-title {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 30px;
-                img {
-                    width: 30%;
-                }
-            }
-            .mat-card-subtitle {
-                margin-bottom: 30px;
-                text-align: center;
-                & > * {
-                    color: #fff;
-                }
-                p {
-                    margin: 0 auto;
-                    font-weight: 500;
-                    width: max-content;
-                    &:first-child {
-                        font-size: 24px;
-                    }
-                    &:last-child {
-                        font-size: 20px;
-                        font-weight: normal;
-                    }
-                }
-            }
-
+        margin-bottom: 30px;
+        img {
+          width: 30%;
         }
-        mat-form-field {
-            width: 100%;
-            /deep/ .mat-form-field-label {
-                color: #fff;
-            }
-
-            /deep/ .mat-form-field-underline {
-                background-color: #fff;
-            }
-            .mat-form-field-ripple {
-                background-color: #fff;
-            }
-            .mat-form-field.mat-form-field-invalid .mat-form-field-ripple, 
-            /deep/ .mat-form-field.mat-form-field-invalid .mat-form-field-ripple.mat-accent {
-                background-color: #f44336;
-            }
+      }
+      .mat-card-subtitle {
+        margin-bottom: 30px;
+        text-align: center;
+        & > * {
+          color: #fff;
         }
+        p {
+          margin: 0 auto;
+          font-weight: 500;
+          width: max-content;
+          &:first-child {
+            font-size: 24px;
+          }
+          &:last-child {
+            font-size: 20px;
+            font-weight: normal;
+          }
+        }
+      }
     }
-    & > p {
-        font-size: 10px;
+    mat-form-field {
+      width: 100%;
+      ::ng-deep .mat-form-field-label {
+        color: #fff;
+      }
+
+      ::ng-deep .mat-form-field-underline {
+        background-color: #fff;
+      }
+      .mat-form-field-ripple {
+        background-color: #fff;
+      }
+      .mat-form-field.mat-form-field-invalid .mat-form-field-ripple,
+      ::ng-deep
+        .mat-form-field.mat-form-field-invalid
+        .mat-form-field-ripple.mat-accent {
+        background-color: #f44336;
+      }
     }
+    button[mat-button] {
+      &:disabled {
+        background: #0073ad;
+        opacity: 0.8;
+        mat-spinner {
+          margin-inline: auto;
+          ::ng-deep svg {
+            circle {
+              stroke: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+  & > p {
+    font-size: 10px;
+  }
 }
 
 // "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-                                                                                                                                                                                                                                     

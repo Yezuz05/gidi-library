@@ -1,41 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { FirebaseService } from '../firebase.service';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   loginForm = this.fb.group({
-    email: [null, Validators.required],
-    password: [null, Validators.required]
-  })
+    email: [null, Validators.compose([Validators.required, Validators.email])],
+    password: [null, Validators.required],
+  });
+  isSubmitting = false;
 
-  constructor(private fb: FormBuilder,
-              private fireService: FirebaseService,
-              private router: Router,
-              private snackBar: MatSnackBar) { }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   submit() {
+    this.isSubmitting = true;
     const form = this.loginForm.value;
-    this.fireService.login(form)
+    this.authService
+      .login(form)
+      .toPromise()
       .then((res) => {
+        this.isSubmitting = false;
+        this.authService.setUser({ ...res });
         this.router.navigate(['/dashboard/books']);
       })
-      .catch((err) =>{
-        this.snackBar.open(err.message, '', {
+      .catch((err) => {
+        this.isSubmitting = false;
+        this.snackBar.open(err.error.error, '', {
           duration: 2000,
-          verticalPosition: 'top'
+          verticalPosition: 'top',
+          panelClass: ['error', 'notification'],
         });
-      })
+      });
   }
-
 }
