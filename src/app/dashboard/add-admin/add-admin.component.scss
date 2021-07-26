@@ -1,0 +1,16 @@
+.add-admin-card {
+  min-height: 90%;
+  p {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    mat-form-field {
+      margin-right: 50px;
+      min-width: 300px;
+    }
+    button {
+      // background: linear-gradient(135deg, #69B447 0%,#56953C 100%);
+      color: #fff;
+    }
+  }
+}

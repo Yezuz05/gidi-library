@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FirebaseService } from '../firebase.service';
+import { AdminsService } from '../services/admins.service';
 import { AuthorsService } from '../services/authors.service';
 import { BooksService } from '../services/books.service';
 import { StudentsService } from '../services/students.service';
@@ -24,7 +25,7 @@ import { StudentsService } from '../services/students.service';
   styles: [],
 })
 export class DeleteComponent implements OnInit {
-  types = ['book', 'student'];
+  types = ['book', 'student', 'admin', 'author'];
 
   constructor(
     public dialogRef: MatDialogRef<DeleteComponent>,
@@ -32,6 +33,7 @@ export class DeleteComponent implements OnInit {
     private booksService: BooksService,
     private studentService: StudentsService,
     private authorsService: AuthorsService,
+    private adminsService: AdminsService,
     private snackBar: MatSnackBar
   ) {}
 
@@ -73,6 +75,21 @@ export class DeleteComponent implements OnInit {
         try {
           await this.authorsService
             .updateAuthor({
+              id: this.data.id,
+              set: { is_deleted: true },
+            })
+            .toPromise();
+          this.dialogRef.close(true);
+        } catch (err) {
+          console.log({ err });
+          this.dialogRef.close();
+          this.showErrorSnackbar();
+        }
+        break;
+      case 'admin':
+        try {
+          await this.adminsService
+            .updateAdmin({
               id: this.data.id,
               set: { is_deleted: true },
             })

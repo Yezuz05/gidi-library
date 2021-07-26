@@ -31,4 +31,8 @@ export class AuthService {
   login(data: any) {
     return this.http.post(`${environment.authBaseUrl}/login`, data);
   }
+
+  createUser(data: any) {
+    return this.http.post(`${environment.authBaseUrl}/signup`, data);
+  }
 }

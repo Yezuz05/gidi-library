@@ -10,6 +10,8 @@ import { ViewReaderComponent } from './view-reader/view-reader.component';
 import { AuthGuard } from '../auth.guard';
 import { AuthorsListComponent } from './authors-list/authors-list.component';
 import { AddAuthorComponent } from './add-author/add-author.component';
+import { AdminsListComponent } from './admins-list/admins-list.component';
+import { AddAdminComponent } from './add-admin/add-admin.component';
 
 const dashboardRoutes: Routes = [
   {
@@ -27,6 +29,8 @@ const dashboardRoutes: Routes = [
       { path: 'authors', component: AuthorsListComponent },
       { path: 'authors/add-author', component: AddAuthorComponent },
       { path: 'authors/edit-author/:id', component: AddAuthorComponent },
+      { path: 'admins', component: AdminsListComponent },
+      { path: 'admins/add-admin', component: AddAdminComponent },
     ],
     canActivate: [AuthGuard],
   },
