@@ -15,6 +15,8 @@ import { ViewReaderComponent } from './view-reader/view-reader.component';
 import { MomentModule } from 'ngx-moment';
 import { AuthorsListComponent } from './authors-list/authors-list.component';
 import { AddAuthorComponent } from './add-author/add-author.component';
+import { AdminsListComponent } from './admins-list/admins-list.component';
+import { AddAdminComponent } from './add-admin/add-admin.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { AddAuthorComponent } from './add-author/add-author.component';
     ViewReaderComponent,
     AuthorsListComponent,
     AddAuthorComponent,
+    AdminsListComponent,
+    AddAdminComponent,
   ],
   imports: [
     CommonModule,

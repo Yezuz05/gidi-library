@@ -1,0 +1,11 @@
+.admins-card {
+  mat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  table {
+    width: 100%;
+  }
+}

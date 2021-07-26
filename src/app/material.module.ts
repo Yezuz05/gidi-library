@@ -17,6 +17,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [],
@@ -38,6 +39,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatAutocompleteModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
+    MatTableModule,
   ],
 })
 export class MaterialModule {}
